@@ -1,0 +1,6 @@
+<script src="users.component.ts"></script>
+<div *ngFor="let user of users">
+<app-user *ngIf="user.id % 2 === 0" [user]="user" (lift)="catchUser($event)"></app-user>
+</div>
+<div>value</div>
+<router-outlet></router-outlet>

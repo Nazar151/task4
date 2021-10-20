@@ -2,13 +2,34 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppComponent } from './app.component';
+import { UsersComponent } from './components/users/users.component';
+import {HttpClientModule} from "@angular/common/http";
+import {RouterModule, Routes} from "@angular/router";
+import { UserComponent } from './components/user/user.component';
+import { UserDetailsComponent } from './components/user-details/user-details.component';
+import { UserDetailsFromServerComponent } from './components/user-details-from-server/user-details-from-server.component';
+import {UserResolveService} from "./services/user-resolve.service";
+import {PostsModule} from "./components/modules/posts/posts.module";
+
+let routes : Routes = [
+  {path: 'detailsFromState/:id', component: UserDetailsComponent},
+  {path: 'userDetailsFromServer/:id', component: UserDetailsFromServerComponent, resolve: {data: UserResolveService}},
+  {path: 'posts', loadChildren: () => import('./components/modules/posts/posts.module').then(m => m.PostsModule)}
+]
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    UsersComponent,
+    UserComponent,
+    UserDetailsComponent,
+    UserDetailsFromServerComponent,
   ],
   imports: [
-    BrowserModule
+    BrowserModule,
+    HttpClientModule,
+    RouterModule.forRoot(routes),
+    PostsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
